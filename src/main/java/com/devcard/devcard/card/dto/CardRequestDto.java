@@ -1,6 +1,6 @@
-package com.devcard.devcard.dto;
+package com.devcard.devcard.card.dto;
 
-import com.devcard.devcard.vo.Card;
+import com.devcard.devcard.card.vo.Card;
 
 public record CardRequestDto (
         String name,

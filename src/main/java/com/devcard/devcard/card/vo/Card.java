@@ -1,4 +1,4 @@
-package com.devcard.devcard.vo;
+package com.devcard.devcard.card.vo;
 
 import jakarta.persistence.*;
 
