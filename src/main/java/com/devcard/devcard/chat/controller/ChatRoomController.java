@@ -1,7 +1,9 @@
 package com.devcard.devcard.chat.controller;
 
+import com.devcard.devcard.chat.dto.ChatRoomListResponse;
 import com.devcard.devcard.chat.dto.ChatRoomResponse;
 import com.devcard.devcard.chat.service.ChatRoomService;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,12 @@ public class ChatRoomController {
 
     public ChatRoomController(ChatRoomService chatRoomService) {
         this.chatRoomService = chatRoomService;
+    }
+    
+    // 2. 전체 채팅 목록 조회
+    @GetMapping("/chats")
+    public ResponseEntity<List<ChatRoomListResponse>> getChatRoomList(){
+        return ResponseEntity.ok(chatRoomService.getChatRoomList());
     }
 
     // 3. 특정 채팅방 조회
