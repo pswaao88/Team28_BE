@@ -31,4 +31,16 @@ public class ChatRoom {
     public List<Card> getParticipants() {
         return participants;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public LocalDateTime getLastMessageTime() {
+        return lastMessageTime;
+    }
 }

@@ -1,6 +1,7 @@
 package com.devcard.devcard.chat.service;
 
 import com.devcard.devcard.chat.dto.ChatMessageResponse;
+import com.devcard.devcard.chat.dto.ChatRoomListResponse;
 import com.devcard.devcard.chat.dto.ChatRoomResponse;
 import com.devcard.devcard.chat.model.Card;
 import com.devcard.devcard.chat.model.ChatMessage;
@@ -22,6 +23,17 @@ public class ChatRoomService {
     public ChatRoomService(ChatRoomRepository chatRoomRepository, ChatMessageRepository chatMessageRepository) {
         this.chatRoomRepository = chatRoomRepository;
         this.chatMessageRepository = chatMessageRepository;
+    }
+
+    // 2. 전체 채팅방 목록 조회
+    public List<ChatRoomListResponse> getChatRoomList(){
+        // 채팅방 목록을 가져와 알맞는 Response 변경 후 리턴
+        return chatRoomRepository.findAll().stream().map(chatRoom -> new ChatRoomListResponse(
+            chatRoom.getId(),
+            new String[] {chatRoom.getParticipants().getFirst().getName(), chatRoom.getParticipants().get(1).getName()},
+            chatRoom.getLastMessage(),
+            chatRoom.getLastMessageTime()
+        )).toList();
     }
 
     // 3. 특정 채팅방 조회
