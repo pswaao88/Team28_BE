@@ -3,11 +3,14 @@ package com.devcard.devcard.chat.service;
 import com.devcard.devcard.chat.dto.ChatMessageResponse;
 import com.devcard.devcard.chat.dto.ChatRoomListResponse;
 import com.devcard.devcard.chat.dto.ChatRoomResponse;
+import com.devcard.devcard.chat.dto.SendingMessageRequest;
+import com.devcard.devcard.chat.dto.SendingMessageResponse;
 import com.devcard.devcard.chat.model.Card;
 import com.devcard.devcard.chat.model.ChatMessage;
 import com.devcard.devcard.chat.model.ChatRoom;
 import com.devcard.devcard.chat.repository.ChatMessageRepository;
 import com.devcard.devcard.chat.repository.ChatRoomRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,11 @@ public class ChatRoomService {
     public ChatRoomService(ChatRoomRepository chatRoomRepository, ChatMessageRepository chatMessageRepository) {
         this.chatRoomRepository = chatRoomRepository;
         this.chatMessageRepository = chatMessageRepository;
+    }
+    // 1. 메세지 보내기
+    public SendingMessageResponse sendMessage(SendingMessageRequest sendingMessageRequest){
+        // 메세지 전송 로직( jpa, h2-db, 소켓 등...)
+        return new SendingMessageResponse(123L, LocalDateTime.now());
     }
 
     // 2. 전체 채팅방 목록 조회
