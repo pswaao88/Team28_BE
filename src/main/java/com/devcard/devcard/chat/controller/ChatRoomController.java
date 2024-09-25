@@ -2,12 +2,16 @@ package com.devcard.devcard.chat.controller;
 
 import com.devcard.devcard.chat.dto.ChatRoomListResponse;
 import com.devcard.devcard.chat.dto.ChatRoomResponse;
+import com.devcard.devcard.chat.dto.SendingMessageRequest;
+import com.devcard.devcard.chat.dto.SendingMessageResponse;
 import com.devcard.devcard.chat.service.ChatRoomService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +24,13 @@ public class ChatRoomController {
     public ChatRoomController(ChatRoomService chatRoomService) {
         this.chatRoomService = chatRoomService;
     }
-    
+
+    // 1. 메세지 전송
+    @PostMapping("/chats")
+    public ResponseEntity<SendingMessageResponse> sendMessage(@RequestBody SendingMessageRequest sendingMessageRequest){
+        return ResponseEntity.status(201).body(chatRoomService.sendMessage(sendingMessageRequest));
+    }
+
     // 2. 전체 채팅 목록 조회
     @GetMapping("/chats")
     public ResponseEntity<List<ChatRoomListResponse>> getChatRoomList(){
