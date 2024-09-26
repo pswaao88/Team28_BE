@@ -120,4 +120,16 @@ public class Card {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public void update(Card updatedCard) {
+        this.name = updatedCard.getName();
+        this.company = updatedCard.getCompany();
+        this.position = updatedCard.getPosition();
+        this.email = updatedCard.getEmail();
+        this.phone = updatedCard.getPhone();
+        this.profilePicture = updatedCard.getProfilePicture();
+        this.bio = updatedCard.getBio();
+        this.updatedAt = LocalDateTime.now();
+        // @Todo: 필요한 다른 필드도 업데이트
+    }
 }

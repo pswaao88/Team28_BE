@@ -28,4 +28,17 @@ public class CardController {
         return ResponseEntity.ok(CardResponseDto.fromEntity(card));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CardResponseDto> updateCard(@PathVariable Long id, @RequestBody CardRequestDto cardRequestDto) {
+        Card updatedCard = cardService.updateCard(id, cardRequestDto.toEntity());
+        return ResponseEntity.ok(CardResponseDto.fromEntity(updatedCard));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCard(@PathVariable Long id) {
+        cardService.deleteCard(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

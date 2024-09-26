@@ -21,4 +21,21 @@ public class CardService {
         return cardRepository.findById(cardId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 명함을 찾을 수 없습니다."));
     }
+
+    public Card updateCard(Long id, Card updatedCard) {
+        Card existingCard = cardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 명함을 찾을 수 없습니다."));
+
+        existingCard.update(updatedCard);
+        return cardRepository.save(existingCard);
+    }
+
+    public void deleteCard(Long id) {
+        if (!cardRepository.existsById(id)) {
+            throw new IllegalArgumentException("해당 명함을 찾을 수 없습니다.");
+        }
+        cardRepository.deleteById(id);
+    }
+
+
 }
