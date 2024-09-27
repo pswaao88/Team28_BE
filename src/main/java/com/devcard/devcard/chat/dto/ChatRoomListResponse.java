@@ -1,14 +1,15 @@
 package com.devcard.devcard.chat.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ChatRoomListResponse {
     private String id;
-    private String[] participants; // => 멤버
+    private List<String> participants;
     private String lastMessage;
     private LocalDateTime lastMessageTime;
 
-    public ChatRoomListResponse(long id, String[] participants, String lastMessage,
+    public ChatRoomListResponse(long id, List<String> participants, String lastMessage,
         LocalDateTime lastMessageTime) {
         this.id = "msg_" + id;
         this.participants = participants;
@@ -20,7 +21,7 @@ public class ChatRoomListResponse {
         return id;
     }
 
-    public String[] getParticipants() {
+    public List<String> getParticipants() {
         return participants;
     }
 
@@ -36,7 +37,7 @@ public class ChatRoomListResponse {
         this.id = "msg_"+id;
     }
 
-    public void setParticipants(String[] participants) {
+    public void setParticipants(List<String> participants) {
         this.participants = participants;
     }
 
