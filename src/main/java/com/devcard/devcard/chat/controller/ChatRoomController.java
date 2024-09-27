@@ -2,6 +2,8 @@ package com.devcard.devcard.chat.controller;
 
 import com.devcard.devcard.chat.dto.ChatRoomListResponse;
 import com.devcard.devcard.chat.dto.ChatRoomResponse;
+import com.devcard.devcard.chat.dto.CreateRoomRequest;
+import com.devcard.devcard.chat.dto.CreateRoomResponse;
 import com.devcard.devcard.chat.dto.SendingMessageRequest;
 import com.devcard.devcard.chat.dto.SendingMessageResponse;
 import com.devcard.devcard.chat.service.ChatRoomService;
@@ -23,6 +25,12 @@ public class ChatRoomController {
 
     public ChatRoomController(ChatRoomService chatRoomService) {
         this.chatRoomService = chatRoomService;
+    }
+
+    // 채팅방 생성
+    @PostMapping("/chats/create")
+    public ResponseEntity<CreateRoomResponse> createChatRoom(@RequestBody CreateRoomRequest createRoomRequest){
+        return ResponseEntity.status(201).body(chatRoomService.createChatRoom(createRoomRequest));
     }
 
     // 1. 메세지 전송

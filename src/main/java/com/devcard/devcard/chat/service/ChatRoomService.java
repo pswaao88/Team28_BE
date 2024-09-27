@@ -3,6 +3,7 @@ package com.devcard.devcard.chat.service;
 import com.devcard.devcard.chat.dto.ChatMessageResponse;
 import com.devcard.devcard.chat.dto.ChatRoomListResponse;
 import com.devcard.devcard.chat.dto.ChatRoomResponse;
+import com.devcard.devcard.chat.dto.CreateRoomRequest;
 import com.devcard.devcard.chat.dto.CreateRoomResponse;
 import com.devcard.devcard.chat.dto.SendingMessageRequest;
 import com.devcard.devcard.chat.dto.SendingMessageResponse;
@@ -30,9 +31,9 @@ public class ChatRoomService {
     }
 
     // 채팅방 생성
-    public CreateRoomResponse createChatRoom(List<Long> participantsId){
+    public CreateRoomResponse createChatRoom(CreateRoomRequest createRoomRequest){
         // jpa를 이용해 ChatUser 리스트 가져오기
-        List<ChatUser> participants = chatRoomRepository.findByIdIn(participantsId);
+        List<ChatUser> participants = chatRoomRepository.findByIdIn(createRoomRequest.getParticipantsId());
         ChatRoom chatRoom = new ChatRoom(participants, LocalDateTime.now()); // chatRoom생성
         chatRoomRepository.save(chatRoom); // db에 저장
         return makeCreateChatRoomResponse(chatRoom); // Response로 변환
