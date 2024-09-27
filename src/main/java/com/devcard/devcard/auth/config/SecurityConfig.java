@@ -1,5 +1,7 @@
-package com.devcard.devcard.config;
+package com.devcard.devcard.auth.config;
 
+import com.devcard.devcard.auth.model.OauthMemberDetails;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,7 +12,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
+//    @Autowired
+    private OauthMemberDetails oauthMemberDetails;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
