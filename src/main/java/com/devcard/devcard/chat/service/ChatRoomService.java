@@ -27,6 +27,13 @@ public class ChatRoomService {
         this.chatRoomRepository = chatRoomRepository;
         this.chatMessageRepository = chatMessageRepository;
     }
+
+    // 채팅방 생성
+    public void createChatRoom(List<Integer> participantsId){
+        List<ChatUser> participants = chatRoomRepository.findByIdIn(participantsId);
+        chatRoomRepository.save(new ChatRoom(participants, LocalDateTime.now()));
+    }
+
     // 1. 메세지 보내기
     public SendingMessageResponse sendMessage(SendingMessageRequest sendingMessageRequest){
         // 메세지 전송 로직( jpa, h2-db, 소켓 등...)

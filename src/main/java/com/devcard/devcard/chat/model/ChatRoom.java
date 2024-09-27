@@ -24,6 +24,11 @@ public class ChatRoom {
     private String lastMessage;
     private LocalDateTime lastMessageTime;
 
+    public ChatRoom(List<ChatUser> participants, LocalDateTime createdAt) {
+        this.participants = participants;
+        this.createdAt = createdAt;
+    }
+
     protected ChatRoom() {
 
     }
