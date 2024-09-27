@@ -28,19 +28,19 @@ public class ChatRoomController {
     }
 
     // 채팅방 생성
-    @PostMapping("/chats/create")
+    @PostMapping("/create")
     public ResponseEntity<CreateRoomResponse> createChatRoom(@RequestBody CreateRoomRequest createRoomRequest){
         return ResponseEntity.status(201).body(chatRoomService.createChatRoom(createRoomRequest));
     }
 
     // 1. 메세지 전송
-    @PostMapping("/chats")
+    @PostMapping("")
     public ResponseEntity<SendingMessageResponse> sendMessage(@RequestBody SendingMessageRequest sendingMessageRequest){
         return ResponseEntity.status(201).body(chatRoomService.sendMessage(sendingMessageRequest));
     }
 
     // 2. 전체 채팅 목록 조회
-    @GetMapping("/chats")
+    @GetMapping("")
     public ResponseEntity<List<ChatRoomListResponse>> getChatRoomList(){
         return ResponseEntity.ok(chatRoomService.getChatRoomList());
     }
