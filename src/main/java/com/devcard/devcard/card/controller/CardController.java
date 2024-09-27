@@ -1,7 +1,7 @@
 package com.devcard.devcard.card.controller;
 
 import com.devcard.devcard.card.dto.CardResponseDto;
-import com.devcard.devcard.card.vo.Card;
+import com.devcard.devcard.card.model.Card;
 import com.devcard.devcard.card.dto.CardRequestDto;
 import com.devcard.devcard.card.service.CardService;
 import org.springframework.http.ResponseEntity;

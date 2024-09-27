@@ -1,4 +1,4 @@
-package com.devcard.devcard.card.vo;
+package com.devcard.devcard.card.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -52,14 +52,15 @@ public class Card {
     public LocalDateTime getUpdatedAt() { return updatedAt; }
 
     public void update(Card updatedCard) {
-        this.name = updatedCard.getName();
-        this.company = updatedCard.getCompany();
-        this.position = updatedCard.getPosition();
-        this.email = updatedCard.getEmail();
-        this.phone = updatedCard.getPhone();
-        this.profilePicture = updatedCard.getProfilePicture();
-        this.bio = updatedCard.getBio();
+        if (updatedCard.getName() != null) this.name = updatedCard.getName();
+        if (updatedCard.getCompany() != null) this.company = updatedCard.getCompany();
+        if (updatedCard.getPosition() != null) this.position = updatedCard.getPosition();
+        if (updatedCard.getEmail() != null) this.email = updatedCard.getEmail();
+        if (updatedCard.getPhone() != null) this.phone = updatedCard.getPhone();
+        if (updatedCard.getProfilePicture() != null) this.profilePicture = updatedCard.getProfilePicture();
+        if (updatedCard.getBio() != null) this.bio = updatedCard.getBio();
         this.updatedAt = LocalDateTime.now();
         // @Todo: 필요한 다른 필드도 업데이트
     }
+
 }
