@@ -1,5 +1,6 @@
+-- 채팅 관련 data.sql (line 1~25)
 -- 예시 명함 데이터
-INSERT INTO card (name, company, position, email, phone, timestamp) VALUES
+INSERT INTO chat_user (name, company, position, email, phone, timestamp) VALUES
     ('라이언', 'kakao', 'Software Engineer', 'ryan@kakao.com', '123-123', CURRENT_TIMESTAMP),
     ('죠르디', 'kakao', 'Product Manager', 'jordy@kakao.com', '456-456', CURRENT_TIMESTAMP),
     ('어피치', 'kakao', 'Backend Developer', 'apeach@kakao.com', '789-789', CURRENT_TIMESTAMP);

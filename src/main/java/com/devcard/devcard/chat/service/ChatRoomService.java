@@ -2,7 +2,7 @@ package com.devcard.devcard.chat.service;
 
 import com.devcard.devcard.chat.dto.ChatMessageResponse;
 import com.devcard.devcard.chat.dto.ChatRoomResponse;
-import com.devcard.devcard.chat.model.Card;
+import com.devcard.devcard.chat.model.chatUser;
 import com.devcard.devcard.chat.model.ChatMessage;
 import com.devcard.devcard.chat.model.ChatRoom;
 import com.devcard.devcard.chat.repository.ChatMessageRepository;
@@ -45,7 +45,7 @@ public class ChatRoomService {
 
         // 참가자 이름 조회
         List<String> participants = chatRoom.getParticipants().stream()
-            .map(Card::getName)
+            .map(chatUser::getName)
             .collect(Collectors.toList());
 
         return new ChatRoomResponse(
