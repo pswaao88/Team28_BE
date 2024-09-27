@@ -1,8 +1,11 @@
 package com.devcard.devcard.chat.service;
 
+import static com.devcard.devcard.chat.util.Constants.CHAT_ROOM_NOT_FOUND;
+
 import com.devcard.devcard.chat.dto.ChatMessageResponse;
 import com.devcard.devcard.chat.dto.ChatRoomListResponse;
 import com.devcard.devcard.chat.dto.ChatRoomResponse;
+import com.devcard.devcard.chat.exception.room.ChatRoomNotFoundException;
 import com.devcard.devcard.chat.dto.CreateRoomRequest;
 import com.devcard.devcard.chat.dto.CreateRoomResponse;
 import com.devcard.devcard.chat.dto.SendingMessageRequest;
@@ -63,7 +66,7 @@ public class ChatRoomService {
 
         // 채팅방 조회
         ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId)
-            .orElseThrow(() -> new IllegalArgumentException("채팅방을 찾을 수 없습니다."));
+            .orElseThrow(() -> new ChatRoomNotFoundException(CHAT_ROOM_NOT_FOUND + chatRoomId));
 
         // 메시지 조회
         List<ChatMessage> messages = chatMessageRepository.findByChatRoomOrderByTimestampAsc(chatRoom);
@@ -90,6 +93,11 @@ public class ChatRoomService {
     // 4. 채팅방 삭제
     public void deleteChatRoom(String chatId) {
         Long chatRoomId = extractChatRoomId(chatId);
+
+        // 채팅방 조회
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId)
+            .orElseThrow(() -> new ChatRoomNotFoundException(CHAT_ROOM_NOT_FOUND + chatRoomId));
+
         // 관련된 메시지를 먼저 삭제
         chatMessageRepository.deleteByChatRoomId(chatRoomId);
 

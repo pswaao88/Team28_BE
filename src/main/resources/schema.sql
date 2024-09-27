@@ -1,3 +1,4 @@
+-- 채팅 관련 schema.sql (line 1~39)
 -- 회원(MEMBERS) 스키마
 CREATE TABLE IF NOT EXISTS chat_user (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -32,6 +33,6 @@ CREATE TABLE IF NOT EXISTS chat_room_participants (
     chat_room_id BIGINT,
     participants_id BIGINT,
     PRIMARY KEY (chat_room_id, participants_id),
-    CONSTRAINT fk_participants_card FOREIGN KEY (participants_id) REFERENCES chat_user(id),
+    CONSTRAINT fk_participants_user FOREIGN KEY (participants_id) REFERENCES chat_user(id),
     CONSTRAINT fk_participants_chat_room FOREIGN KEY (chat_room_id) REFERENCES chat_room(id)
 );
