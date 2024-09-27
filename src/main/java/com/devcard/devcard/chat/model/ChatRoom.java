@@ -19,7 +19,7 @@ public class ChatRoom {
     private Long id;
     @ManyToMany
     @JoinTable(name = "chat_room_participants")
-    private List<Card> participants;
+    private List<ChatUser> participants;
     private LocalDateTime createdAt;
     private String lastMessage;
     private LocalDateTime lastMessageTime;
@@ -28,7 +28,7 @@ public class ChatRoom {
 
     }
 
-    public List<Card> getParticipants() {
+    public List<ChatUser> getParticipants() {
         return participants;
     }
 
