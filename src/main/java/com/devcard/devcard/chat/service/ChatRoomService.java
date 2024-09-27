@@ -3,6 +3,7 @@ package com.devcard.devcard.chat.service;
 import com.devcard.devcard.chat.dto.ChatMessageResponse;
 import com.devcard.devcard.chat.dto.ChatRoomListResponse;
 import com.devcard.devcard.chat.dto.ChatRoomResponse;
+import com.devcard.devcard.chat.dto.CreateRoomResponse;
 import com.devcard.devcard.chat.dto.SendingMessageRequest;
 import com.devcard.devcard.chat.dto.SendingMessageResponse;
 import com.devcard.devcard.chat.model.ChatUser;
@@ -29,9 +30,12 @@ public class ChatRoomService {
     }
 
     // 채팅방 생성
-    public void createChatRoom(List<Long> participantsId){
+    public CreateRoomResponse createChatRoom(List<Long> participantsId){
+        // jpa를 이용해 ChatUser 리스트 가져오기
         List<ChatUser> participants = chatRoomRepository.findByIdIn(participantsId);
-        chatRoomRepository.save(new ChatRoom(participants, LocalDateTime.now()));
+        ChatRoom chatRoom = new ChatRoom(participants, LocalDateTime.now()); // chatRoom생성
+        chatRoomRepository.save(chatRoom); // db에 저장
+        return makeCreateChatRoomResponse(chatRoom); // Response로 변환
     }
 
     // 1. 메세지 보내기
@@ -45,7 +49,7 @@ public class ChatRoomService {
         // 채팅방 목록을 가져와 알맞는 Response 변경 후 리턴
         return chatRoomRepository.findAll().stream().map(chatRoom -> new ChatRoomListResponse(
             chatRoom.getId(),
-            new String[] {chatRoom.getParticipants().getFirst().getName(), chatRoom.getParticipants().get(1).getName()},
+            chatRoom.getParticipantsName(),
             chatRoom.getLastMessage(),
             chatRoom.getLastMessageTime()
         )).toList();
@@ -95,5 +99,10 @@ public class ChatRoomService {
     // chatId 에서 숫자만 추출하는 메서드
     private Long extractChatRoomId(String chatId) {
         return Long.parseLong(chatId.replace("chat_", ""));
+    }
+
+    // CreateChatRoomResponse를 만드는 메소드
+    public CreateRoomResponse makeCreateChatRoomResponse(ChatRoom chatRoom){
+        return new CreateRoomResponse("chat_"+chatRoom.getId(), chatRoom.getParticipantsName(), chatRoom.getCreatedAt());
     }
 }

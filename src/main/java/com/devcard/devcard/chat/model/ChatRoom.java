@@ -37,6 +37,10 @@ public class ChatRoom {
         return participants;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
     public Long getId() {
         return id;
     }
@@ -47,5 +51,9 @@ public class ChatRoom {
 
     public LocalDateTime getLastMessageTime() {
         return lastMessageTime;
+    }
+    // participants로부터 name을 가져와 리스트화
+    public List<String> getParticipantsName(){
+        return this.participants.stream().map(ChatUser :: getName).toList();
     }
 }
