@@ -15,6 +15,7 @@ import com.devcard.devcard.chat.model.ChatMessage;
 import com.devcard.devcard.chat.model.ChatRoom;
 import com.devcard.devcard.chat.repository.ChatMessageRepository;
 import com.devcard.devcard.chat.repository.ChatRoomRepository;
+import com.devcard.devcard.chat.repository.ChatUserRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,16 +28,18 @@ public class ChatRoomService {
 
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
+    private final ChatUserRepository chatUserRepository;
 
-    public ChatRoomService(ChatRoomRepository chatRoomRepository, ChatMessageRepository chatMessageRepository) {
+    public ChatRoomService(ChatRoomRepository chatRoomRepository, ChatMessageRepository chatMessageRepository, ChatUserRepository chatUserRepository) {
         this.chatRoomRepository = chatRoomRepository;
         this.chatMessageRepository = chatMessageRepository;
+        this.chatUserRepository = chatUserRepository;
     }
 
     // 채팅방 생성
     public CreateRoomResponse createChatRoom(CreateRoomRequest createRoomRequest){
         // jpa를 이용해 ChatUser 리스트 가져오기
-        List<ChatUser> participants = chatRoomRepository.findByIdIn(createRoomRequest.getParticipantsId());
+        List<ChatUser> participants = chatUserRepository.findByIdIn(createRoomRequest.getParticipantsId());
         ChatRoom chatRoom = new ChatRoom(participants, LocalDateTime.now()); // chatRoom생성
         chatRoomRepository.save(chatRoom); // db에 저장
         return makeCreateChatRoomResponse(chatRoom); // Response로 변환
