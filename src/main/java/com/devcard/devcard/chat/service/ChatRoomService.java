@@ -29,7 +29,7 @@ public class ChatRoomService {
     }
 
     // 채팅방 생성
-    public void createChatRoom(List<Integer> participantsId){
+    public void createChatRoom(List<Long> participantsId){
         List<ChatUser> participants = chatRoomRepository.findByIdIn(participantsId);
         chatRoomRepository.save(new ChatRoom(participants, LocalDateTime.now()));
     }
