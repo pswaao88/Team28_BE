@@ -61,6 +61,11 @@ public class ChatRoomService {
     // 4. 채팅방 삭제
     public void deleteChatRoom(String chatId) {
         Long chatRoomId = extractChatRoomId(chatId);
+
+        // 채팅방 조회
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId)
+            .orElseThrow(() -> new ChatRoomNotFoundException(CHAT_ROOM_NOT_FOUND + chatRoomId));
+
         // 관련된 메시지를 먼저 삭제
         chatMessageRepository.deleteByChatRoomId(chatRoomId);
 
