@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "chat_user")
-public class chatUser {
+public class ChatUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class chatUser {
     private String phone;
     private LocalDateTime timestamp;
 
-    protected chatUser() {
+    protected ChatUser() {
 
     }
 
