@@ -1,10 +1,13 @@
 package com.devcard.devcard.chat.service;
 
+import static com.devcard.devcard.chat.util.Constants.CHAT_ROOM_NOT_FOUND;
+
 import com.devcard.devcard.chat.dto.ChatMessageResponse;
 import com.devcard.devcard.chat.dto.ChatRoomResponse;
-import com.devcard.devcard.chat.model.chatUser;
+import com.devcard.devcard.chat.exception.room.ChatRoomNotFoundException;
 import com.devcard.devcard.chat.model.ChatMessage;
 import com.devcard.devcard.chat.model.ChatRoom;
+import com.devcard.devcard.chat.model.chatUser;
 import com.devcard.devcard.chat.repository.ChatMessageRepository;
 import com.devcard.devcard.chat.repository.ChatRoomRepository;
 import java.util.List;
@@ -31,7 +34,7 @@ public class ChatRoomService {
 
         // 채팅방 조회
         ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId)
-            .orElseThrow(() -> new IllegalArgumentException("채팅방을 찾을 수 없습니다."));
+            .orElseThrow(() -> new ChatRoomNotFoundException(CHAT_ROOM_NOT_FOUND + chatRoomId));
 
         // 메시지 조회
         List<ChatMessage> messages = chatMessageRepository.findByChatRoomOrderByTimestampAsc(chatRoom);
