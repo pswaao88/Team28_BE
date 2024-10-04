@@ -1,6 +1,6 @@
 package com.devcard.devcard.card.dto;
 
-import com.devcard.devcard.card.model.Card;
+import com.devcard.devcard.card.entity.Card;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

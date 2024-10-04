@@ -1,7 +1,7 @@
 package com.devcard.devcard.card.service;
 
 import com.devcard.devcard.card.repository.CardRepository;
-import com.devcard.devcard.card.model.Card;
+import com.devcard.devcard.card.entity.Card;
 import org.springframework.stereotype.Service;
 
 @Service

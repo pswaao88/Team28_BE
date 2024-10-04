@@ -1,4 +1,4 @@
-package com.devcard.devcard.card.model;
+package com.devcard.devcard.card.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
