@@ -25,6 +25,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'com.google.zxing:core:3.5.1'
 	implementation 'com.google.zxing:javase:3.5.1'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
