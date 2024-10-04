@@ -1,5 +1,6 @@
 package com.devcard.devcard.card.entity;
 
+import com.devcard.devcard.card.dto.CardRequestDto;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -22,23 +23,85 @@ public class Card {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    // @Todo add: socialLinks
-    // @Todo add: tags
 
+    // 기본 생성자 (JPA 요구 사항)
     protected Card() {
-
     }
 
-    public Card(String name, String company, String email, String position, String phone) {
-        this.name = name;
-        this.company = company;
-        this.email = email;
-        this.position = position;
-        this.phone = phone;
+    // 빌더 클래스
+    public static class Builder {
+        private String githubId;
+        private String name;
+        private String company;
+        private String position;
+        private String email;
+        private String phone;
+        private String profilePicture;
+        private String bio;
+
+        public Builder() {
+        }
+
+        public Builder githubId(String githubId) {
+            this.githubId = githubId;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder company(String company) {
+            this.company = company;
+            return this;
+        }
+
+        public Builder position(String position) {
+            this.position = position;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder phone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public Builder profilePicture(String profilePicture) {
+            this.profilePicture = profilePicture;
+            return this;
+        }
+
+        public Builder bio(String bio) {
+            this.bio = bio;
+            return this;
+        }
+
+        public Card build() {
+            return new Card(this);
+        }
+    }
+
+    // 빌더 사용 생성자
+    private Card(Builder builder) {
+        this.githubId = builder.githubId;
+        this.name = builder.name;
+        this.company = builder.company;
+        this.position = builder.position;
+        this.email = builder.email;
+        this.phone = builder.phone;
+        this.profilePicture = builder.profilePicture;
+        this.bio = builder.bio;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
+    // Getter
     public Long getId() { return id; }
     public String getGithubId() { return githubId; }
     public String getName() { return name; }
@@ -51,16 +114,13 @@ public class Card {
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
 
-    public void update(Card updatedCard) {
-        if (updatedCard.getName() != null) this.name = updatedCard.getName();
-        if (updatedCard.getCompany() != null) this.company = updatedCard.getCompany();
-        if (updatedCard.getPosition() != null) this.position = updatedCard.getPosition();
-        if (updatedCard.getEmail() != null) this.email = updatedCard.getEmail();
-        if (updatedCard.getPhone() != null) this.phone = updatedCard.getPhone();
-        if (updatedCard.getProfilePicture() != null) this.profilePicture = updatedCard.getProfilePicture();
-        if (updatedCard.getBio() != null) this.bio = updatedCard.getBio();
+    // DTO 기반 업데이트 메서드
+    public void updateFromDto(CardRequestDto dto) {
+        if (dto.getName() != null) this.name = dto.getName();
+        if (dto.getCompany() != null) this.company = dto.getCompany();
+        if (dto.getPosition() != null) this.position = dto.getPosition();
+        if (dto.getEmail() != null) this.email = dto.getEmail();
+        if (dto.getPhone() != null) this.phone = dto.getPhone();
         this.updatedAt = LocalDateTime.now();
-        // @Todo: 필요한 다른 필드도 업데이트
     }
-
 }
