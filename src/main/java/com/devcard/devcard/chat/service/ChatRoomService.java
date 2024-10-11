@@ -18,13 +18,19 @@ import com.devcard.devcard.chat.repository.ChatRoomRepository;
 import com.devcard.devcard.chat.repository.ChatUserRepository;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.socket.WebSocketSession;
 
 @Service
 @Transactional
 public class ChatRoomService {
+
+    // id를 통해 채팅방을 관리 및 id 와 List<WebSocketSession>을 통해 해당 채팅방의 각 세션 즉 사용자 관리 아래 세션리스트 serivice계층으로 이동
+    private static final ConcurrentMap<String, List<WebSocketSession>> chatRoomSessions = new ConcurrentHashMap<>();
 
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
