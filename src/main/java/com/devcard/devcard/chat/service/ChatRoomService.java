@@ -16,11 +16,14 @@ import com.devcard.devcard.chat.model.ChatUser;
 import com.devcard.devcard.chat.repository.ChatMessageRepository;
 import com.devcard.devcard.chat.repository.ChatRoomRepository;
 import com.devcard.devcard.chat.repository.ChatUserRepository;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
@@ -155,6 +158,22 @@ public class ChatRoomService {
         } catch (ParseException e) {
             e.printStackTrace(); // 예외를 로깅
             return null; // 예외 발생 시 null 반환
+        }
+    }
+
+    // uri 로부터 전달된 chatId 추출
+    private String extractChatIdFromUri(String uri){
+        // uir가 ws://localhost:8080/ws?chatId=12345&userId=67890로 요청이 들어온다면
+        try {
+            return Stream
+                .of(new URI(uri).getQuery().split("&")) //URI에서 쿼리문자열에서 &로 구분 지어 매개변수 분리 및 스트림으로 변환 ex) chatId=12345&userId=67890
+                .map(param -> param.split("=")) // 매개변수에서 =을 제거하여 key - value로 변경 [["chatId", "12345"], ["userId", "67890"]]
+                .filter(values -> values.length == 2 && "chatId".equals(values[0])) // 요소가 2개 이면서 chatId인 것만 가져오기 ["chatId","12345"]]
+                .map(pair -> pair[1])// 2번째인 value 값가져와 chatId 추출 ["12345"]
+                .findFirst() // chatId 가져오기 "12345"
+                .orElse(null); // 없다면 null값 리턴
+        }catch (URISyntaxException e){ // 오류 임시적으로 처리
+            return null;
         }
     }
 }
