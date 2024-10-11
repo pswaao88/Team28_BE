@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import net.minidev.json.JSONObject;
@@ -126,6 +127,12 @@ public class ChatRoomService {
 
     public boolean existsChatRoom(String chatId){
         return chatRoomRepository.existsById(Long.parseLong(chatId)); // Long으로 변환=> 올바른 로직인가
+    }
+
+    // chatId에 해당되는 값이 있으면 해당값에 추가 없으면 생성 후 추가
+    public void addSessionToChatRoom(String chatId, WebSocketSession session){
+        // computIfAbsent메소드: 키값이 없으면 해당되는 키값으로 생성 해 리턴, 있다면 해당 값 리턴
+        chatRoomSessions.computeIfAbsent(chatId, k -> new CopyOnWriteArrayList<>()).add(session);
     }
 
     // chatId 에서 숫자만 추출하는 메서드
