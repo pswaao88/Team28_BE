@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.WebSocketSession;
@@ -130,5 +133,16 @@ public class ChatRoomService {
             chatRoom.getParticipantsName(),
             chatRoom.getCreatedAt()
         );
+    }
+
+    public String extractChatId(String payload){
+        JSONParser parser = new JSONParser();
+        try {
+            JSONObject jsonObject = (JSONObject) parser.parse(payload);
+            return jsonObject.getAsString("chatId");
+        } catch (ParseException e) {
+            e.printStackTrace(); // 예외를 로깅
+            return null; // 예외 발생 시 null 반환
+        }
     }
 }
