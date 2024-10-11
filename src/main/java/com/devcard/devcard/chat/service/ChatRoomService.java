@@ -145,4 +145,16 @@ public class ChatRoomService {
             return null; // 예외 발생 시 null 반환
         }
     }
+
+    // 메세지 payload로 부터 message 추출하는 메소드
+    public String extractMessage(String payload){
+        JSONParser parser = new JSONParser();
+        try {
+            JSONObject jsonObject = (JSONObject) parser.parse(payload);
+            return jsonObject.getAsString("message");
+        } catch (ParseException e) {
+            e.printStackTrace(); // 예외를 로깅
+            return null; // 예외 발생 시 null 반환
+        }
+    }
 }
