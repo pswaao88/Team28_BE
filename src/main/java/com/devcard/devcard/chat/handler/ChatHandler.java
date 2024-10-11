@@ -2,7 +2,6 @@ package com.devcard.devcard.chat.handler;
 
 import com.devcard.devcard.chat.service.ChatRoomService;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -15,6 +14,7 @@ public class ChatHandler extends TextWebSocketHandler {
 
     // service 계층 사용
     private final ChatRoomService chatRoomService;
+
     // 의존성 주입
     public ChatHandler(ChatRoomService chatRoomService) {
         this.chatRoomService = chatRoomService;
@@ -27,12 +27,12 @@ public class ChatHandler extends TextWebSocketHandler {
         String message = chatRoomService.extractMessage(payload);
         List<WebSocketSession> chatRoom = chatRoomService.getChatRoomSessions(chatId);
 
-        if(chatRoom != null){ // 채팅방이 있을 때
-            for(WebSocketSession webSocketSession : chatRoom){ // 해당 채팅방의 모든 세션에 대해서 메세지 보내기
-                if(webSocketSession.isOpen()){ // 세션이 열려있다면
+        if (chatRoom != null) { // 채팅방이 있을 때
+            for (WebSocketSession webSocketSession : chatRoom) { // 해당 채팅방의 모든 세션에 대해서 메세지 보내기
+                if (webSocketSession.isOpen()) { // 세션이 열려있다면
                     try {
                         webSocketSession.sendMessage(new TextMessage(message)); // 세션에 메세지 보내기
-                    }catch (IOException e){ // 오류 일시적 처리
+                    } catch (IOException e) { // 오류 일시적 처리
                         // 추가적으로 로그를 남길지? 고민하기
                     }
                 }

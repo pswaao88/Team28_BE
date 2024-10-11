@@ -125,21 +125,21 @@ public class ChatRoomService {
         chatRoomRepository.deleteById(chatRoomId);
     }
 
-    public boolean existsChatRoom(String chatId){
+    public boolean existsChatRoom(String chatId) {
         return chatRoomRepository.existsById(Long.parseLong(chatId)); // Long으로 변환=> 올바른 로직인가
     }
 
     // chatId에 해당되는 값이 있으면 해당값에 추가 없으면 생성 후 추가
-    public void addSessionToChatRoom(String chatId, WebSocketSession session){
+    public void addSessionToChatRoom(String chatId, WebSocketSession session) {
         // computIfAbsent메소드: 키값이 없으면 해당되는 키값으로 생성 해 리턴, 있다면 해당 값 리턴
         chatRoomSessions.computeIfAbsent(chatId, k -> new CopyOnWriteArrayList<>()).add(session);
     }
 
     // 해당되는 세션 리스트 리턴
-    public List<WebSocketSession> getChatRoomSessions(String chatId){
+    public List<WebSocketSession> getChatRoomSessions(String chatId) {
         return chatRoomSessions.get(chatId);
     }
-    
+
     // chatId 에서 숫자만 추출하는 메서드
     private Long extractChatRoomId(String chatId) {
         return Long.parseLong(chatId.replace("chat_", ""));
@@ -154,7 +154,7 @@ public class ChatRoomService {
         );
     }
 
-    public String extractChatId(String payload){
+    public String extractChatId(String payload) {
         JSONParser parser = new JSONParser();
         try {
             JSONObject jsonObject = (JSONObject) parser.parse(payload);
@@ -166,7 +166,7 @@ public class ChatRoomService {
     }
 
     // 메세지 payload로 부터 message 추출하는 메소드
-    public String extractMessage(String payload){
+    public String extractMessage(String payload) {
         JSONParser parser = new JSONParser();
         try {
             JSONObject jsonObject = (JSONObject) parser.parse(payload);
@@ -184,17 +184,19 @@ public class ChatRoomService {
     }
 
     // uri 로부터 전달된 chatId 추출
-    private String extractChatIdFromUri(String uri){
+    private String extractChatIdFromUri(String uri) {
         // uir가 ws://localhost:8080/ws?chatId=12345&userId=67890로 요청이 들어온다면
         try {
             return Stream
-                .of(new URI(uri).getQuery().split("&")) //URI에서 쿼리문자열에서 &로 구분 지어 매개변수 분리 및 스트림으로 변환 ex) chatId=12345&userId=67890
+                .of(new URI(uri).getQuery()
+                    .split("&")) //URI에서 쿼리문자열에서 &로 구분 지어 매개변수 분리 및 스트림으로 변환 ex) chatId=12345&userId=67890
                 .map(param -> param.split("=")) // 매개변수에서 =을 제거하여 key - value로 변경 [["chatId", "12345"], ["userId", "67890"]]
-                .filter(values -> values.length == 2 && "chatId".equals(values[0])) // 요소가 2개 이면서 chatId인 것만 가져오기 ["chatId","12345"]]
+                .filter(values -> values.length == 2
+                    && "chatId".equals(values[0])) // 요소가 2개 이면서 chatId인 것만 가져오기 ["chatId","12345"]]
                 .map(pair -> pair[1])// 2번째인 value 값가져와 chatId 추출 ["12345"]
                 .findFirst() // chatId 가져오기 "12345"
                 .orElse(null); // 없다면 null값 리턴
-        }catch (URISyntaxException e){ // 오류 임시적으로 처리
+        } catch (URISyntaxException e) { // 오류 임시적으로 처리
             return null;
         }
     }
