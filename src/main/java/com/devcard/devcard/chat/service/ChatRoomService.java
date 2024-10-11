@@ -161,6 +161,12 @@ public class ChatRoomService {
         }
     }
 
+    // 세션으로 부터 chatId 추출
+    public String extractChatIdFromSession(WebSocketSession session) {
+        String uri = session.getUri().toString();
+        return extractChatIdFromUri(uri);
+    }
+    
     // uri 로부터 전달된 chatId 추출
     private String extractChatIdFromUri(String uri){
         // uir가 ws://localhost:8080/ws?chatId=12345&userId=67890로 요청이 들어온다면
