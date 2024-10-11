@@ -51,9 +51,15 @@ public class ChatHandler extends TextWebSocketHandler {
         // 세션 추가
         chatRoomService.addSessionToChatRoom(chatId, session);
     }
+
     // 클라이언트 접속 해제 시 호출
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
-        webSocketSessionList.remove(session);
+        String chatId = chatRoomService.extractChatIdFromSession(session);
+        List<WebSocketSession> sessions = chatRoomService.getChatRoomSessions(chatId);
+        if (sessions != null) {
+            sessions.remove(session);
+            // 채팅방을 제거하지 않고 해당 세션만 제거
+        }
     }
 }
