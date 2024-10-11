@@ -135,6 +135,11 @@ public class ChatRoomService {
         chatRoomSessions.computeIfAbsent(chatId, k -> new CopyOnWriteArrayList<>()).add(session);
     }
 
+    // 해당되는 세션 리스트 리턴
+    public List<WebSocketSession> getChatRoomSessions(String chatId){
+        return chatRoomSessions.get(chatId);
+    }
+    
     // chatId 에서 숫자만 추출하는 메서드
     private Long extractChatRoomId(String chatId) {
         return Long.parseLong(chatId.replace("chat_", ""));
